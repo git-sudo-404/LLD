@@ -1,21 +1,21 @@
 package com.gitsudo404.movieticketbooking;
 
 public class User {
-  private Integer userId;
   private String userName;
+  private Integer userId;
 
   public User(
-      Integer userId,
-      String userName) {
-    this.userId = userId;
+      String userName,
+      Integer userId) {
     this.userName = userName;
-  }
-
-  public Integer getUserId() {
-    return this.userId;
+    this.userId = userId;
   }
 
   public String getUserName() {
     return this.userName;
+  }
+
+  public Integer getUserId() {
+    return this.userId;
   }
 }

@@ -1,47 +1,52 @@
 package com.gitsudo404.movieticketbooking;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import com.gitsudo404.movieticketbooking.enums.ShowTypeEnum;
+
 public class Show {
-  private Integer showNumber; // the 1st or 2nd ... ,
-  private Integer screenNumber;
-  private Timestamp startTime;
-  private Timestamp endTime;
-  private Movie movie;
+
+  private ShowTypeEnum showType;
+  private LocalDateTime startTime;
+  private LocalDateTime endTime;
+
+  public Movie movie;
+  private Screen screen;
   private ArrayList<ShowSeat> seats;
 
-  public Integer getShowNumber() {
-    return this.showNumber;
+  public Show(
+      ShowTypeEnum showType,
+      LocalDateTime startTime,
+      LocalDateTime endTime,
+      Movie movie,
+      Screen screen) {
+    ArrayList<ShowSeat> newSeats = new ArrayList<ShowSeat>();
+
+    Integer seatNumber = 1;
+
+    for (Integer rowNumber = 1; rowNumber <= this.screen.getNumberOfCols(); rowNumber++) {
+      for (Integer colNumber = 1; colNumber <= this.screen.getNumberOfCols(); colNumber++) {
+        ShowSeat newSeat = new ShowSeat(seatNumber, rowNumber, this.screen.getScreenNumber());
+        newSeats.add(newSeat);
+        seatNumber++;
+        if (seatNumber > this.screen.getNumberOfSeats()) {
+          break;
+        }
+      }
+    }
+    this.seats = newSeats;
   }
 
-  public Integer getScreenNumber() {
-    return this.screenNumber;
+  public ShowTypeEnum getShowType() {
+    return this.showType;
   }
 
-  public Timestamp getStartTime() {
+  public LocalDateTime getStartTime() {
     return this.startTime;
   }
 
-  public Timestamp getEndTime() {
+  public LocalDateTime getEndTime() {
     return this.endTime;
-  }
-
-  public Movie getMovie() {
-    return this.movie;
-  }
-
-  public ArrayList<ShowSeat> getSeats() {
-    return this.seats;
-  }
-
-  public ArrayList<ShowSeat> getAvailableSeats() {
-    ArrayList<ShowSeat> availableSeats = new ArrayList<ShowSeat>();
-    for (ShowSeat showSeat : this.seats) {
-      if (!showSeat.isBooked()) {
-        availableSeats.add(showSeat);
-      }
-    }
-    return availableSeats;
   }
 }
